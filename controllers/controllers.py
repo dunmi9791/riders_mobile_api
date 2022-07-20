@@ -80,6 +80,11 @@ class MobileFacilityStaff(http.Controller):
         data = {'status': 200, 'response': facilitystaffs_list, 'message': 'Facility Staffs Returned'}
         return data
 
+class NewAuth(http.Controller):
+    @http.route('/web/session/auth', type='json', cors='*', auth="none")
+    def auth(self, db, login, password, base_location=None):
+        request.session.authenticate(db, login, password)
+        return request.env['ir.http'].session_info()
 # class RidersMobileApi(http.Controller):
 #     @http.route('/riders_mobile_api/riders_mobile_api/', auth='public')
 #     def index(self, **kw):
