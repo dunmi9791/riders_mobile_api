@@ -8,7 +8,7 @@ from dateutil.relativedelta import relativedelta
 
 
 class MobileApiSamples(http.Controller):
-    @http.route('/samples/', website=True, type='json', auth='user')
+    @http.route('/samples/', website=True, type='json', cors='*', auth='user')
     def samplesall(self):
         # return "List of all Samples"
         samples_list = []
@@ -26,6 +26,29 @@ class MobileApiSamples(http.Controller):
 
         data = {'status': 200, 'response': samples_list, 'message': 'Samples Returned'}
         return data
+
+class MobileApiSampleCount(http.Controller):
+    @http.route('/samples/count', website=True, type='json', cors='*', auth='user')
+    def samplescount(self):
+        # return "Count of all Samples"
+
+        samples_count = request.env['sample.transport'].search_count([])
+
+
+        data = {'status': 200, 'response': samples_count, 'message': 'Samples  Count Returned'}
+        return data
+
+
+class MobileApiResultCount(http.Controller):
+    @http.route('/results/count', website=True, type='json', cors='*', auth='user')
+    def resultscount(self):
+        # return "Count of all Samples"
+
+        results_count = request.env['result.transport'].search_count([])
+
+        data = {'status': 200, 'response': results_count, 'message': 'Results Count Returned'}
+        return data
+
 
 class MobileApiTestTypes(http.Controller):
     @http.route('/testtypes/', website=True, type='json', auth='user')
