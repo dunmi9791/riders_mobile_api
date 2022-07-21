@@ -40,7 +40,7 @@ class MobileApiSampleCount(http.Controller):
 
 
 class MobileApiResultCount(http.Controller):
-    @http.route('/results/count', type='json', cors='*', auth='none')
+    @http.route('/results/count', website=True, type='json', auth='user')
     def resultscount(self):
         # return "Count of all Samples"
 
