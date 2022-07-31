@@ -8,7 +8,7 @@ from dateutil.relativedelta import relativedelta
 
 
 class MobileApiSamples(http.Controller):
-    @http.route('/samples/', website=True, type='json', cors='*', auth='user')
+    @http.route('/samples/', website=True, type='json', cors='*', auth='public')
     def samplesall(self):
         # return "List of all Samples"
         samples_list = []
@@ -27,8 +27,28 @@ class MobileApiSamples(http.Controller):
         data = {'status': 200, 'response': samples_list, 'message': 'Samples Returned'}
         return data
 
+
+class MobileApiResults(http.Controller):
+    @http.route('/results/', website=True, type='json', cors='*', auth='public')
+    def resultsall(self):
+        # return "List of all Samples"
+        results_list = []
+        results_all = request.env['result.transport'].search([])
+        for rec in results_all:
+            vals = {
+                'id': rec.id,
+                'name': rec.rt_no,
+                'test_type': rec.test_type,
+                'total_results': rec.total_results_sent,
+
+            }
+            results_list.append(vals)
+
+        data = {'status': 200, 'response': results_list, 'message': 'Results Returned'}
+        return data
+
 class MobileApiSampleCount(http.Controller):
-    @http.route('/samples/count/', website=True, type='json', cors='*', auth='user')
+    @http.route('/samples/count/', website=True, type='json', cors='*', auth='public')
     def samplescount(self):
         # return "Count of all Samples"
 
@@ -40,7 +60,7 @@ class MobileApiSampleCount(http.Controller):
 
 
 class MobileApiResultCount(http.Controller):
-    @http.route('/results/count', website=True, type='json', auth='user')
+    @http.route('/results/count', website=True, type='json', auth='public')
     def resultscount(self):
         # return "Count of all Samples"
 
@@ -69,7 +89,7 @@ class MobileApiTestTypes(http.Controller):
 
 
 class MobileApiFacility(http.Controller):
-    @http.route('/facilities/', website=True, type='json', auth='user')
+    @http.route('/facilities/', website=True, type='json', auth='public')
     def facilitiesall(self):
         # return "List of all Samples"
         facilities_list = []
