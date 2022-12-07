@@ -118,7 +118,7 @@ class MobileApiPatients(http.Controller):
                 'name': rec.name,
 
             }
-            facilities_list.append(vals)
+            patients_list.append(vals)
 
         data = {'status': 200, 'response': patients_list, 'message': 'Facilities Returned'}
         return data
