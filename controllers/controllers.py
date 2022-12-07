@@ -106,6 +106,24 @@ class MobileApiFacility(http.Controller):
         return data
 
 
+class MobileApiPatients(http.Controller):
+    @http.route('/patients/', website=True, type='json', auth='public')
+    def patientsall(self):
+        # return "List of all Samples"
+        patients_list = []
+        patients_all = request.env['patient.code'].search([])
+        for rec in patients_all:
+            vals = {
+                'id': rec.id,
+                'name': rec.name,
+
+            }
+            facilities_list.append(vals)
+
+        data = {'status': 200, 'response': patients_list, 'message': 'Facilities Returned'}
+        return data
+
+
 class MobileFacilityStaff(http.Controller):
     @http.route('/facilitystaffs/', website=True, type='json', auth='user')
     def facilitystaffall(self):
