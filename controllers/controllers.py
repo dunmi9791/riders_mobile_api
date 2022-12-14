@@ -71,7 +71,7 @@ class MobileApiResultCount(http.Controller):
 
 
 class MobileApiTestTypes(http.Controller):
-    @http.route('/testtypes/', website=True, type='json', cors='*', auth='user')
+    @http.route('/testtypes/', website=True, type='json', cors='*', auth='public')
     def testtypes(self):
         # return "List of all Samples"
         tests_list = []
@@ -125,7 +125,7 @@ class MobileApiPatients(http.Controller):
 
 
 class MobileFacilityStaff(http.Controller):
-    @http.route('/facilitystaffs/', website=True, type='json', cors='*', auth='user')
+    @http.route('/facilitystaffs/', website=True, type='json', cors='*', auth='public')
     def facilitystaffall(self):
         # return "List of all Samples"
         facilitystaffs_list = []
