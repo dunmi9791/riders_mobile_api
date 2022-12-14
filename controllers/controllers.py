@@ -47,13 +47,13 @@ class MobileApiResults(http.Controller):
         data = {'status': 200, 'response': results_list, 'message': 'Results Returned'}
         return data
 
+
 class MobileApiSampleCount(http.Controller):
     @http.route('/samples/count/', website=True, type='json', cors='*', auth='public')
     def samplescount(self):
         # return "Count of all Samples"
 
         samples_count = request.env['sample.transport'].search_count([])
-
 
         data = {'status': 200, 'response': samples_count, 'message': 'Samples  Count Returned'}
         return data
@@ -71,7 +71,7 @@ class MobileApiResultCount(http.Controller):
 
 
 class MobileApiTestTypes(http.Controller):
-    @http.route('/testtypes/', website=True, type='json', auth='user')
+    @http.route('/testtypes/', website=True, type='json', cors='*', auth='user')
     def testtypes(self):
         # return "List of all Samples"
         tests_list = []
@@ -89,7 +89,7 @@ class MobileApiTestTypes(http.Controller):
 
 
 class MobileApiFacility(http.Controller):
-    @http.route('/facilities/', website=True, type='json', auth='public')
+    @http.route('/facilities/', website=True, type='json', cors='*', auth='public')
     def facilitiesall(self):
         # return "List of all Samples"
         facilities_list = []
@@ -107,7 +107,7 @@ class MobileApiFacility(http.Controller):
 
 
 class MobileApiPatients(http.Controller):
-    @http.route('/patients/', website=True, type='json', auth='public')
+    @http.route('/patients/', website=True, type='json', cors='*', auth='public')
     def patientsall(self):
         # return "List of all Samples"
         patients_list = []
@@ -125,7 +125,7 @@ class MobileApiPatients(http.Controller):
 
 
 class MobileFacilityStaff(http.Controller):
-    @http.route('/facilitystaffs/', website=True, type='json', auth='user')
+    @http.route('/facilitystaffs/', website=True, type='json', cors='*', auth='user')
     def facilitystaffall(self):
         # return "List of all Samples"
         facilitystaffs_list = []
