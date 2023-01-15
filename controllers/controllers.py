@@ -8,7 +8,7 @@ from dateutil.relativedelta import relativedelta
 
 
 class MobileApiSamples(http.Controller):
-    @http.route('/samples/', website=True, type='json', cors='*', auth='public')
+    @http.route('/samples/', website=True, type='json', cors='*', auth='user')
     def samplesall(self):
         # return "List of all Samples"
         samples_list = []
@@ -29,7 +29,7 @@ class MobileApiSamples(http.Controller):
 
 
 class MobileApiResults(http.Controller):
-    @http.route('/results/', website=True, type='json', cors='*', auth='public')
+    @http.route('/results/', website=True, type='json', cors='*', auth='user')
     def resultsall(self):
         # return "List of all Samples"
         results_list = []
@@ -49,7 +49,7 @@ class MobileApiResults(http.Controller):
 
 
 class MobileApiSampleCount(http.Controller):
-    @http.route('/samples/count/', website=True, type='json', cors='*', auth='public')
+    @http.route('/samples/count/', website=True, type='json', cors='*', auth='user')
     def samplescount(self):
         # return "Count of all Samples"
 
@@ -60,7 +60,7 @@ class MobileApiSampleCount(http.Controller):
 
 
 class MobileApiResultCount(http.Controller):
-    @http.route('/results/count', website=True, type='json', cors='*', auth='public')
+    @http.route('/results/count', website=True, type='json', cors='*', auth='user')
     def resultscount(self):
         # return "Count of all Samples"
 
