@@ -20,6 +20,7 @@ class MobileApiSamples(http.Controller):
                 'specimen_type': rec.specimen_type,
                 'total_samples': rec.total_samples_sent,
                 'temperature_at_send': rec.temperature_send,
+                'sending_facility': rec.sending_lab.name,
 
             }
             samples_list.append(vals)
@@ -27,6 +28,57 @@ class MobileApiSamples(http.Controller):
         data = {'status': 200, 'response': samples_list, 'message': 'Samples Returned'}
         return data
 
+
+class MobileApiSamplesDetails(http.Controller):
+    @http.route('/samples/details', website=True, type='json', cors='*', auth='user')
+    def samplesall(self, sample):
+        # return "List of all Samples"
+        samples_list = []
+        sample = request.params.get('sample')
+
+        domain = [('id', '=', sample)]
+        samples_all = request.env['sample.transport'].search(domain)
+
+        for rec in samples_all:
+            vals = {
+                'id': rec.id,
+                'name': rec.st_no,
+                'specimen_type': rec.specimen_type,
+                'total_samples': rec.total_samples_sent,
+                'temperature_at_send': rec.temperature_send,
+                'sending_facility': rec.sending_lab.name,
+                'receiving_lab': rec.receiving_lab.name,
+                'receiving_staff': rec.receiving_staff,
+                'temperature_receive': rec.temperature_receive,
+                'receive_time': rec.date_time_received,
+
+            }
+            samples_list.append(vals)
+
+        data = {'status': 200, 'response': samples_list, 'message': 'Samples Returned'}
+        return data
+
+
+class MobileApiSample(http.Controller):
+    @http.route('/samples/id/', website=True, type='json', cors='*', auth='user')
+    def samplesall(self):
+        # return "List of all Samples"
+        samples_list = []
+        samples_all = request.env['sample.transport'].search([])
+        for rec in samples_all:
+            vals = {
+                'id': rec.id,
+                'name': rec.st_no,
+                'specimen_type': rec.specimen_type,
+                'total_samples': rec.total_samples_sent,
+                'temperature_at_send': rec.temperature_send,
+                'sending_facility': rec.sending_lab,
+
+            }
+            samples_list.append(vals)
+
+        data = {'status': 200, 'response': samples_list, 'message': 'Samples Returned'}
+        return data
 
 class MobileApiResults(http.Controller):
     @http.route('/results/', website=True, type='json', cors='*', auth='user')
@@ -140,6 +192,44 @@ class MobileFacilityStaff(http.Controller):
 
         data = {'status': 200, 'response': facilitystaffs_list, 'message': 'Facility Staffs Returned'}
         return data
+
+
+class Mobile3pl(http.Controller):
+    @http.route('/3pl/', website=True, type='json', cors='*', auth='public')
+    def plall(self):
+        # return "List of all Samples"
+        thirdpl_list = []
+        thirdpl_all = request.env['third.pl'].search([])
+        for rec in thirdpl_all:
+            vals = {
+                'id': rec.id,
+                'name': rec.name,
+                'phone': rec.phone,
+
+            }
+            thirdpl_list.append(vals)
+
+        data = {'status': 200, 'response': thirdpl_list, 'message': 'Third PL  Returned'}
+        return data
+
+
+class TestType(http.Controller):
+    @http.route('/testtype/', website=True, type='json', cors='*', auth='public')
+    def testtype(self):
+        # return "List of all Samples"
+        test_list = []
+        test_all = request.env['test.type'].search([])
+        for rec in test_all:
+            vals = {
+                'id': rec.id,
+                'name': rec.name,
+
+            }
+            test_list.append(vals)
+
+        data = {'status': 200, 'response': test_list, 'message': 'Test Type  Returned'}
+        return data
+
 
 class NewAuth(http.Controller):
     @http.route('/web/session/auth', type='json', cors='*', auth="none")
