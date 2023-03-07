@@ -48,9 +48,14 @@ class MobileApiSamplesDetails(http.Controller):
                 'temperature_at_send': rec.temperature_send,
                 'sending_facility': rec.sending_lab.name,
                 'receiving_lab': rec.receiving_lab.name,
-                'receiving_staff': rec.receiving_staff,
+                'receiving_staff': rec.receiving_staff.name,
                 'temperature_receive': rec.temperature_receive,
                 'receive_time': rec.date_time_received,
+                'patient_codes': rec.patient_sample_details,
+                'sent_time': rec.date_time_sent,
+                'test_type': rec.test_type,
+                '3pl_name': rec.third_pl.name,
+                '3pl_phone': rec.third_pl.phone,
 
             }
             samples_list.append(vals)
@@ -80,6 +85,7 @@ class MobileApiSample(http.Controller):
         data = {'status': 200, 'response': samples_list, 'message': 'Samples Returned'}
         return data
 
+
 class MobileApiResults(http.Controller):
     @http.route('/results/', website=True, type='json', cors='*', auth='user')
     def resultsall(self):
@@ -92,6 +98,41 @@ class MobileApiResults(http.Controller):
                 'name': rec.rt_no,
                 'test_type': rec.test_type,
                 'total_results': rec.total_results_sent,
+
+            }
+            results_list.append(vals)
+
+        data = {'status': 200, 'response': results_list, 'message': 'Results Returned'}
+        return data
+
+
+class MobileApiResultsDetails(http.Controller):
+    @http.route('/results/details', website=True, type='json', cors='*', auth='user')
+    def resultsall(self, result):
+        # return "List of all Samples"
+        results_list = []
+        result = request.params.get('sample')
+
+        domain = [('id', '=', result)]
+        results_all = request.env['result.transport'].search(domain)
+
+        for rec in results_all:
+            vals = {
+                'id': rec.id,
+                'name': rec.st_no,
+                'specimen_type': rec.specimen_type,
+                'total_samples': rec.total_samples_sent,
+                'temperature_at_send': rec.temperature_send,
+                'sending_facility': rec.sending_lab.name,
+                'receiving_lab': rec.receiving_lab.name,
+                'receiving_staff': rec.receiving_staff.name,
+                'temperature_receive': rec.temperature_receive,
+                'receive_time': rec.date_time_received,
+                'patient_codes': rec.patient_result_details,
+                'sent_time': rec.date_time_sent,
+                'test_type': rec.test_type,
+                '3pl_name': rec.third_pl.name,
+                '3pl_phone': rec.third_pl.phone,
 
             }
             results_list.append(vals)
